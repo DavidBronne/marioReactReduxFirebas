@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router} from 'react-router-dom';
+import Navbar from './layout/Navbar'
 
 class App extends Component  {
   render () {
     return (
       <Router>
         <div className="App">
-          <h1>Eliot Plan</h1>
+          <Navbar/>
         </div>
       </Router>
     );
