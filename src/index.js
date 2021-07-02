@@ -8,22 +8,40 @@ import rootReducer from './store/reducers/rootReducer';
 import {Provider} from 'react-redux';
 //store enhancers
 import thunk from 'redux-thunk';
-import {reduxFirestore, getFirestore} from 'redux-firestore'
-import {reactReduxFirebase, getFirebase} from 'react-redux-firebase'
-import fbConfig from './config/fbConfig'
+import {createFirestoreInstance, reduxFirestore, getFirestore} from 'redux-firestore'
+import {ReactReduxFirebaseProvider, reactReduxFirebase, getFirebase} from 'react-redux-firebase'
+import fbConfig from './config/fbConfig';
+import firebase from 'firebase/app'
 
-const store = createStore(rootReducer, 
+/* const store = createStore(rootReducer, 
   compose (
     applyMiddleware(thunk.withExtraArgument({getFirebase,getFirestore})),
     reduxFirestore(fbConfig),
     reactReduxFirebase(fbConfig)
   )
+); */
+
+const store = createStore(rootReducer,
+  compose(
+    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+    /* reactReduxFirebase(fbConfig), // redux binding for firebase */
+    reduxFirestore(firebase, fbConfig) // redux bindings for firestore
+  )
 );
+
+const rrfProps = {
+  firebase,
+  config: fbConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
       <App />
+    </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
