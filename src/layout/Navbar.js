@@ -8,7 +8,9 @@ const Navbar = () => {
         <nav className="nav-wraper grey darken-3">
             <div className="container">
                 <NavLink to='/' className='brand-logo'>Eliot Plan</NavLink>
-                <SignedInLinks/>
+               
+                    <SignedInLinks/>
+               
                 <SignedOutLinks/>
             </div>
         </nav>
