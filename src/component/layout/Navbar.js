@@ -7,8 +7,8 @@ import {compose} from 'redux';
 
 const Navbar = (props) => {
     /* console.log('props :>> ', props); */
-    const {auth} = props
-    const links = auth.uid ? <SignedInLinks/> : <SignedOutLinks/>
+    const {auth, profile} = props
+    const links = auth.uid ? <SignedInLinks profile={profile}/> : <SignedOutLinks/>
     return (
         <nav className="nav-wraper grey darken-3">
             <div className="container">
