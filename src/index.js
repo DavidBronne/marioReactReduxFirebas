@@ -5,11 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from './store/reducers/rootReducer';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 //store enhancers
 import thunk from 'redux-thunk';
 import {createFirestoreInstance, reduxFirestore, getFirestore} from 'redux-firestore'
-import {ReactReduxFirebaseProvider, reactReduxFirebase, getFirebase} from 'react-redux-firebase'
+import {ReactReduxFirebaseProvider, reactReduxFirebase, getFirebase, isLoaded} from 'react-redux-firebase'
 import fbConfig from './config/fbConfig';
 import firebase from 'firebase/app'
 
@@ -36,17 +36,28 @@ const rrfProps = {
   createFirestoreInstance
 };
 
+function AuthIsLoaded({ children }) {
+  const auth = useSelector(state => state.firebase.auth)
+  if (!isLoaded(auth)) return <div>splash screen...</div>;
+  return children
+}
+
 
   ReactDOM.render(
     <React.StrictMode>
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <App />
+      <AuthIsLoaded>
+        <App />
+      </AuthIsLoaded>
     </ReactReduxFirebaseProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
   );
+
+
+
 
   
 // If you want to start measuring performance in your app, pass a function
