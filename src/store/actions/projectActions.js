@@ -3,8 +3,8 @@ export const createProject = (project) => {
       // make async call to database
       const profile = getState().firebase.profile;
       const authId = getState().firebase.auth.uid
-      console.log('profile :>> ', profile);
-      console.log('authId :>> ', authId);
+      /* console.log('profile :>> ', profile);
+      console.log('authId :>> ', authId); */
 
       const firestore = getFirestore()
       firestore.collection('projects').add({
@@ -21,4 +21,4 @@ export const createProject = (project) => {
     }
   };
 
-   /* default createProject */
+   
