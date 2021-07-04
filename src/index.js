@@ -29,16 +29,21 @@ const store = createStore(rootReducer,
   )
 );
 
+const rrfConfig = {
+  userProfile: 'users',
+  useFirestoreForProfile: true
+}
+
 const rrfProps = {
   firebase,
-  config: fbConfig, 
+  config: rrfConfig, fbConfig, 
   dispatch: store.dispatch,
-  createFirestoreInstance
+  createFirestoreInstance,
 };
 
 function AuthIsLoaded({ children }) {
   const auth = useSelector(state => state.firebase.auth)
-  if (!isLoaded(auth)) return <div>splash screen...</div>;
+  if (!isLoaded(auth)) return <div className="center">Loading...</div>;
   return children
 }
 

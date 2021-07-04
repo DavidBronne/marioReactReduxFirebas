@@ -2,7 +2,8 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import SignedInLinks from './SignedInLinks';
 import SignedOutLinks from './SignedOutLinks';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
+import {compose} from 'redux';
 
 const Navbar = (props) => {
     /* console.log('props :>> ', props); */
@@ -19,10 +20,11 @@ const Navbar = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    /* console.log('state :>> ', state); */
+    console.log('state :>> ', state);
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        profile: state.firebase.profile // profile passed as props.profile
     }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(Navbar)
